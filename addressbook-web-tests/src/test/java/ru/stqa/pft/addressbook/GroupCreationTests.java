@@ -8,14 +8,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class GroupCreationTests {
   private WebDriver wd;
 
-  @Before(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-  }
-
-  @Test
-  public void testGroupCreation() throws Exception {
     wd.get("http://localhost/addressbook/group.php?selected%5B%5D=1&selected%5B%5D=2&delete=Delete+group%28s%29");
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).click();
@@ -25,6 +21,10 @@ public class GroupCreationTests {
     wd.findElement(By.name("pass")).sendKeys("secret");
     wd.findElement(By.xpath("//input[@value='Login']")).click();
     wd.findElement(By.xpath("//div[@id='content']/h1")).click();
+  }
+
+  @Test
+  public void testGroupCreation() throws Exception {
     wd.findElement(By.linkText("groups")).click();
     wd.findElement(By.name("new")).click();
     wd.findElement(By.name("group_name")).click();
@@ -44,7 +44,6 @@ public class GroupCreationTests {
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     wd.quit();
-    }
   }
 
   private boolean isElementPresent(By by) {
@@ -55,7 +54,6 @@ public class GroupCreationTests {
       return false;
     }
   }
-
   private boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
@@ -64,5 +62,4 @@ public class GroupCreationTests {
       return false;
     }
   }
-
-  }
+}

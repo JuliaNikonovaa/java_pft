@@ -4,39 +4,29 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-public class ContactHelper {
-	private WebDriver wd;
-	//protected GroupHelper groupHelper;
+public class ContactHelper extends HelperBase {
 
 	public ContactHelper(WebDriver wd) {
-		this.wd = wd;
+		super(wd);
 	}
 
 	public void returnToContactPage() {
-		wd.findElement(By.linkText("home")).click();
+		clickcontact(By.linkText("home"));
 	}
 
 	public void enterContact() {
-		wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+		clickcontact(By.xpath("//div[@id='content']/form/input[21]"));
 	}
 
 	public void fillContactForm(ContactData contactData) {
-		wd.findElement(By.name("firstname")).click();
-		wd.findElement(By.name("firstname")).clear();
-		wd.findElement(By.name("firstname")).sendKeys(contactData.getName());
-		wd.findElement(By.name("lastname")).click();
-		wd.findElement(By.name("lastname")).clear();
-		wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
-		wd.findElement(By.name("mobile")).click();
-		wd.findElement(By.name("mobile")).clear();
-		wd.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
-		wd.findElement(By.name("email")).click();
-		wd.findElement(By.name("email")).clear();
-		wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
+		persone(By.name("firstname"), contactData.getName());
+		persone(By.name("lastname"), contactData.getLastname());
+		persone(By.name("mobile"), contactData.getMobile());
+		persone(By.name("email"), contactData.getEmail());
 	}
 
 	public void gotoAddNewContactPage() {
-		wd.findElement(By.linkText("add new")).click();
+		clickcontact(By.linkText("add new"));
 	}
 
 	public void closeDialogPage() {
@@ -44,10 +34,10 @@ public class ContactHelper {
 	}
 
 	public void deleteSelectedContact() {
-		wd.findElement(By.xpath("//input[@value='Delete']")).click();
+		clickcontact(By.xpath("//input[@value='Delete']"));
 	}
 
 	public void selectContact() {
-		wd.findElement(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input")).click();
+		clickcontact(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input"));
 	}
 }

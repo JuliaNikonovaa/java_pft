@@ -40,4 +40,12 @@ public class ContactHelper extends HelperBase {
 	public void selectContact() {
 		clickcontact(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input"));
 	}
+
+	public void editSelectedContact() {
+		clickcontact(By.xpath("//img[@alt='Edit']"));
+	}
+
+	public void updateContact() {
+		clickcontact(By.name("update"));
+	}
 }

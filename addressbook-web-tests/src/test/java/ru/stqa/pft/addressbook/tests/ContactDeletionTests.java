@@ -8,9 +8,10 @@ public class ContactDeletionTests extends TestBase {
 
 	@Test
 	public void testContactDeletion() throws Exception {
-
+		app.getContactHelper().returnToContactPage();
 			if (! app.getContactHelper().isThereAContact()) {
-		app.getContactHelper().createContact(new ContactData("Julia", "89119119191", "j.n@kx.com", "Nikonova", null), true);
+				app.getContactHelper().gotoAddNewContactPage();
+		app.getContactHelper().createContact(new ContactData("Julia", "89119119191", "j.n@kx.com", "Nikonova", "test1"), true);
 		}
 		app.getContactHelper().returnToContactPage();
 		app.getContactHelper().selectContact();

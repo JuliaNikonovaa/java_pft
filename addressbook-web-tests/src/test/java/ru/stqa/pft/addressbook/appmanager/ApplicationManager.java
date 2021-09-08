@@ -24,16 +24,15 @@ public class ApplicationManager {
 	}
 
 	public void init() {
-				if (browser.equals(BrowserType.FIREFOX)) {
-		wd = new FirefoxDriver();
-	} else if (browser.equals(BrowserType.CHROME)) {
+		if (browser.equals(BrowserType.FIREFOX)) {
+			wd = new FirefoxDriver();
+		} else if (browser.equals(BrowserType.CHROME)) {
 			wd = new ChromeDriver();
 		} else if (browser.equals(BrowserType.EDGE)) {
 			wd = new EdgeDriver();
 		}
 		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		wd.get("http://localhost/addressbook/group.php?selected%5B%5D=1&selected%5B%5D=2&delete=Delete+group%28s%29");
-		//contactHelper.groupHelper = new GroupHelper(wd);
 		groupHelper = new GroupHelper(wd);
 		navigationHelper = new NavigationHelper(wd);
 		sessionHelper = new SessionHelper(wd);

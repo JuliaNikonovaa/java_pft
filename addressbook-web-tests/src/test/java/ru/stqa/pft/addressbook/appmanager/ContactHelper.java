@@ -2,9 +2,14 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -28,7 +33,7 @@ public class ContactHelper extends HelperBase {
 
 		if (creation) {
 			new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-		} else{
+		} else {
 			Assert.assertFalse(isElementPresent(By.name("new_group")));
 		}
 	}
@@ -45,7 +50,7 @@ public class ContactHelper extends HelperBase {
 		clickcontact(By.xpath("//input[@value='Delete']"));
 	}
 
-	public void selectContact(int index ) {
+	public void selectContact(int index) {
 		wd.findElements(By.name("selected[]")).get(index).click();
 	}
 
@@ -57,17 +62,29 @@ public class ContactHelper extends HelperBase {
 		clickcontact(By.name("update"));
 	}
 
-	public void createContact(ContactData contactData, boolean b ) {
+	public void createContact(ContactData contactData, boolean b) {
 		fillContactForm(contactData, b);
 		enterContact();
 		returnToContactPage();
 	}
 
 	public boolean isThereAContact() {
-return isElementPresent(By.name("selected[]"));
+		return isElementPresent(By.name("selected[]"));
 	}
 
 	public int getContactCount() {
 		return wd.findElements(By.name("selected[]")).size();
+	}
+
+	public List<ContactData> getContactList() {
+		List<ContactData> contacts = new ArrayList<ContactData>();
+		List<WebElement> elements = wd.findElements(By.name("entry"));
+		for (WebElement element : elements) {
+			List<WebElement> cells = element.findElements(By.tagName("td"));
+			String name = element.getText();
+				ContactData contact = new ContactData(name, null, null, null, null);
+				contacts.add(contact);
+			}
+		return contacts;
 	}
 }

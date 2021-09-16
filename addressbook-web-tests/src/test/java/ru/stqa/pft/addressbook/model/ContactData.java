@@ -1,13 +1,32 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	private int id;
 	private final String name;
 	private final String mobile;
 	private final String email;
 	private final String lastname;
 	private String group;
 
-	public ContactData(String name, String mobile, String email, String lastname, String group) {
+	public int getId() {
+		return id;
+	}
+
+	public ContactData(String lastname, String name, String email, String mobile, String group) {
+		this.id = Integer.MAX_VALUE;
+		this.name = name;
+		this.mobile = mobile;
+		this.email = email;
+		this.lastname = lastname;
+		this.group = group;
+	}
+
+	public ContactData(int id, String lastname, String name, String email, String mobile, String group) {
+		this.id = id;
 		this.name = name;
 		this.mobile = mobile;
 		this.email = email;
@@ -31,18 +50,6 @@ public class ContactData {
 		return lastname;
 	}
 
-	public String getGroup() {
-		return group;
-	}
-
-	@Override
-	public String toString() {
-		return "ContactData{" +
-						"name='" + name + '\'' +
-						", lastname='" + lastname + '\'' +
-						'}';
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -60,4 +67,17 @@ public class ContactData {
 		result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
 		return result;
 	}
+
+	public String getGroup() {
+		return group;
+	}
+	@Override
+	public String toString() {
+		return "ContactData{" +
+						"id='" + id + '\'' +
+						", name='" + name + '\'' +
+						", lastname='" + lastname + '\'' +
+						'}';
+	}
+
 }

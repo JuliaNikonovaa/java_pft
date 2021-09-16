@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>Untitled Test Suite</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Untitled Test Case</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost/addressbook/<datalist><option>http://localhost/addressbook/</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=add new<datalist><option>link=add new</option><option>xpath=//a[contains(text(),'add new')]</option><option>xpath=//div[@id='nav']/ul/li[2]/a</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='home'])[1]/following::a[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Address Book'])[1]/following::a[3]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='groups'])[1]/preceding::a[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='next birthdays'])[1]/preceding::a[2]</option><option>xpath=//*/text()[normalize-space(.)='add new']/parent::*</option><option>xpath=//a[contains(@href, 'edit.php')]</option><option>xpath=//li[2]/a</option><option>css=li.all &gt; a</option></datalist></td><td></td>
+</tr>
+<tr><td>doubleClick</td><td>link=add new<datalist><option>link=add new</option><option>xpath=//a[contains(text(),'add new')]</option><option>xpath=//div[@id='nav']/ul/li[2]/a</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='home'])[1]/following::a[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Address Book'])[1]/following::a[3]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='groups'])[1]/preceding::a[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='next birthdays'])[1]/preceding::a[2]</option><option>xpath=//*/text()[normalize-space(.)='add new']/parent::*</option><option>xpath=//a[contains(@href, 'edit.php')]</option><option>xpath=//li[2]/a</option><option>css=li.all &gt; a</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=firstname<datalist><option>name=firstname</option><option>xpath=//input[@name='firstname']</option><option>xpath=//div[@id='content']/form/input[3]</option><option>xpath=//input[3]</option><option>css=input[name="firstname"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=firstname<datalist><option>name=firstname</option><option>xpath=//input[@name='firstname']</option><option>xpath=//div[@id='content']/form/input[3]</option><option>xpath=//input[3]</option><option>css=input[name="firstname"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=firstname<datalist><option>name=firstname</option><option>xpath=//input[@name='firstname']</option><option>xpath=//div[@id='content']/form/input[3]</option><option>xpath=//input[3]</option><option>css=input[name="firstname"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=firstname<datalist><option>name=firstname</option><option>xpath=//input[@name='firstname']</option><option>xpath=//div[@id='content']/form/input[3]</option><option>xpath=//input[3]</option><option>css=input[name="firstname"]</option></datalist></td><td>Nikonova2</td>
+</tr>
+</tbody></table>
+</body>
+</html>

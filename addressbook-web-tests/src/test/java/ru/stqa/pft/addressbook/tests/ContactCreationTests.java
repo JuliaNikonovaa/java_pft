@@ -4,27 +4,24 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTests extends TestBase {
 
 	@Test
 	public void testContactCreation() throws Exception {
 		app.сontact().returnToContactPage();
-		List<ContactData> before = app.сontact().contactList();
+		Set<ContactData> before = app.сontact().all();
 		app.сontact().gotoAddNewContactPage();
-		ContactData contact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254").withGroup("test");
+		ContactData contact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254").withGroup("test1");
 		app.сontact().create(contact, true);
-		List<ContactData> after = app.сontact().contactList();
+		Set<ContactData> after = app.сontact().all();
 		Assert.assertEquals(after.size(), before.size() + 1);
 //app.logout();
 
+contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
 		before.add(contact);
-		Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-		before.sort(byId);
-		after.sort(byId);
-		Assert.assertEquals(before, after);
+	Assert.assertEquals(before, after);
 	}
 
 }

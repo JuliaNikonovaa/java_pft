@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.HashSet;
 import java.util.List;
@@ -67,6 +68,7 @@ public class ContactHelper extends HelperBase {
 	public void create(ContactData contactData, boolean b) {
 		fillContactForm(contactData, b);
 		enterContact();
+		contactCache = null;
 		returnToContactPage();
 	}
 	public void modify(ContactData contact) {
@@ -74,6 +76,7 @@ public class ContactHelper extends HelperBase {
 		editSelectedContact(contact.getId());
 		fillContactForm(contact, false);
 		updateContact();
+		contactCache = null;
 		returnToContactPage();
 	}
 
@@ -86,15 +89,21 @@ public class ContactHelper extends HelperBase {
 		selectContactById(contact.getId());
 		deleteSelectedContact();
 		closeDialogPage();
+		contactCache = null;
 		returnToContactPage();
 	}
 
 	public int getContactCount() {
 		return wd.findElements(By.name("selected[]")).size();
 	}
+	private Contacts contactCache = null;
 
 	public Contacts all() {
-		Contacts contacts = new Contacts();
+		if (contactCache != null) {
+			return new Contacts(contactCache);
+		}
+		
+		contactCache = new Contacts();
 		List<WebElement> elements = wd.findElements(By.name("entry"));
 		for (WebElement element : elements) {
 			List<WebElement> cells = element.findElements(By.tagName("td"));
@@ -103,9 +112,9 @@ public class ContactHelper extends HelperBase {
 			String name = cells.get(nameNumber).getText();
 			String lastname = cells.get(lastNameNumber).getText();
 			int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-			contacts.add(new ContactData().withId(id).withLastname(lastname).withName(name).withEmail(null).withMobile(null).withGroup(null));
+			contactCache.add(new ContactData().withId(id).withLastname(lastname).withName(name).withEmail(null).withMobile(null).withGroup(null));
 		}
-		return contacts;
+		return contactCache;
 	}
 
 

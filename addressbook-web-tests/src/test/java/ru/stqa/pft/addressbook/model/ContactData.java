@@ -5,6 +5,18 @@ public class ContactData {
 	private String name;
 	private String mobile;
 	private String email;
+	private String homePhone;
+	private String workPhone;
+
+	public ContactData withWorkPhone(String workPhone) {
+		this.workPhone = workPhone;
+		return this;
+	}
+
+	public ContactData withHomePhone(String homePhone) {
+		this.homePhone = homePhone;
+		return this;
+	}
 
 	public ContactData withId(int id) {
 		this.id = id;
@@ -56,6 +68,14 @@ public class ContactData {
 
 	public String getLastname() {
 		return lastname;
+	}
+
+	public String getHomePhone() {
+		return homePhone;
+	}
+
+	public String getWorkPhone() {
+		return workPhone;
 	}
 
 	@Override

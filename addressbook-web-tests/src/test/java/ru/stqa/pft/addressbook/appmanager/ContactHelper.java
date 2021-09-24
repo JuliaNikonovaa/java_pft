@@ -99,7 +99,6 @@ public class ContactHelper extends HelperBase {
 		if (contactCache != null) {
 			return new Contacts(contactCache);
 		}
-
 		contactCache = new Contacts();
 		List<WebElement> elements = wd.findElements(By.name("entry"));
 		for (WebElement element : elements) {
@@ -108,8 +107,10 @@ public class ContactHelper extends HelperBase {
 			int nameNumber = 2;
 			String name = cells.get(nameNumber).getText();
 			String lastname = cells.get(lastNameNumber).getText();
+			String allPhones = cells.get(5).getText();
 			int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-			contactCache.add(new ContactData().withId(id).withLastname(lastname).withName(name).withEmail(null).withMobile(null).withGroup(null));
+			contactCache.add(new ContactData().withId(id).withLastname(lastname).withName(name).withEmail(null).withGroup(null)
+							.withAllPhones(allPhones));
 		}
 		return contactCache;
 	}
@@ -117,7 +118,7 @@ public class ContactHelper extends HelperBase {
 
 	public ContactData infoFromEditForm(ContactData contact) {
 	initContactModificationById(contact.getId());
-	String name = wd.findElement(By.name("name")).getAttribute("value");
+	String name = wd.findElement(By.name("firstname")).getAttribute("value");
 		String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
 		String home = wd.findElement(By.name("home")).getAttribute("value");
 		String mobile = wd.findElement(By.name("mobile")).getAttribute("value");

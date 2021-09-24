@@ -105,11 +105,14 @@ public class ContactHelper extends HelperBase {
 			List<WebElement> cells = element.findElements(By.tagName("td"));
 			int lastNameNumber = 1;
 			int nameNumber = 2;
+			int addressNumber = 3;
 			String name = cells.get(nameNumber).getText();
 			String lastname = cells.get(lastNameNumber).getText();
+			String address = cells.get(addressNumber).getText();
+			String allEmails = cells.get(4).getText();
 			String allPhones = cells.get(5).getText();
 			int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-			contactCache.add(new ContactData().withId(id).withLastname(lastname).withName(name).withEmail(null).withGroup(null)
+			contactCache.add(new ContactData().withId(id).withLastname(lastname).withName(name).withAddress(address).withAllEmails(allEmails).withGroup(null)
 							.withAllPhones(allPhones));
 		}
 		return contactCache;

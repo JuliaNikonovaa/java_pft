@@ -35,6 +35,13 @@ public class ContactPhoneTests extends TestBase {
 		assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
 	}
 
+	private String mergeEmails(ContactData contact) {
+		return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+						.stream().filter((s) -> !s.equals(""))
+						.map(ContactPhoneTests::cleaned)
+						.collect(Collectors.joining("\n"));
+	}
+
 	private String mergePhones(ContactData contact) {
 		return Arrays.asList(contact.getHomePhone(), contact.getMobile(), contact.getWorkPhone())
 						.stream().filter((s) -> !s.equals(""))

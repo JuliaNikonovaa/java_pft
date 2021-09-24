@@ -118,13 +118,19 @@ public class ContactHelper extends HelperBase {
 
 	public ContactData infoFromEditForm(ContactData contact) {
 	initContactModificationById(contact.getId());
-	String name = wd.findElement(By.name("firstname")).getAttribute("value");
+	  String name = wd.findElement(By.name("firstname")).getAttribute("value");
 		String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
 		String home = wd.findElement(By.name("home")).getAttribute("value");
 		String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
 		String work = wd.findElement(By.name("work")).getAttribute("value");
+		String address = wd.findElement(By.name("Address")).getAttribute("value");
+		String email = wd.findElement(By.name("E-mail")).getAttribute("value");
+		String email2 = wd.findElement(By.name("E-mail2")).getAttribute("value");
+		String email3 = wd.findElement(By.name("E-mail2")).getAttribute("value");
 		wd.navigate().back();
-		return new ContactData().withId(contact.getId()).withName(name).withLastname(lastname).withHomePhone(home).withMobile(mobile).withWorkPhone(work);
+		return new ContactData().withId(contact.getId()).withName(name).withLastname(lastname)
+						.withHomePhone(home).withMobile(mobile).withWorkPhone(work)
+						.withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
 	}
 
 	private void initContactModificationById(int id) {

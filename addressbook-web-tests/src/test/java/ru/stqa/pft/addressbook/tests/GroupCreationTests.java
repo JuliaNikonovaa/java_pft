@@ -36,14 +36,12 @@ public class GroupCreationTests extends TestBase {
 		app.group().create(group);
 		assertThat(app.group().сount(), equalTo(before.size() + 1));
 		Groups after = app.group().all();
-
 		//app.logout();
-
 		assertThat(after, equalTo(
 						before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 	}
 
-	@Test (enabled = false)
+	@Test
 	public void testBadGroupCreation() throws Exception {
 		app.goTo().groupPage();
 		Groups before = app.group().all();

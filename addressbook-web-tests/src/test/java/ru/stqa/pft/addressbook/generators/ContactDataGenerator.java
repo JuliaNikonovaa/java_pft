@@ -67,10 +67,10 @@ public class ContactDataGenerator {
 	private List<ContactData> generateContacts(int count) {
 		List<ContactData> contacts = new ArrayList<ContactData>();
 		for (int i = 0; i < count; i++) {
-			contacts.add(new ContactData().withName(String.format("Julia\n%s", i))
-							.withLastname(String.format("Nikonova\n%s", i))
-							.withEmail(String.format("email\n%s", i))
-							.withMobile(String.format("111\n%s", i))
+			contacts.add(new ContactData().withName(String.format("Julia %s", i))
+							.withLastname(String.format("Nikonova %s", i))
+							.withEmail(String.format("email %s", i))
+							.withMobile(String.format("111 %s", i))
 							.withGroup(String.format("test")));
 		}
 		return contacts;

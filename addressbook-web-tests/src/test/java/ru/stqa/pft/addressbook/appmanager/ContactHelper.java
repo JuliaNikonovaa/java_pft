@@ -29,7 +29,7 @@ public class ContactHelper extends HelperBase {
 		persone(By.name("firstname"), contactData.getName());
 		persone(By.name("email"), contactData.getEmail());
 		persone(By.name("mobile"), contactData.getMobile());
-		attach(By.name("photo"), contactData.getPhoto());
+		//attach(By.name("photo"), contactData.getPhoto());
 
 
 		if (creation) {

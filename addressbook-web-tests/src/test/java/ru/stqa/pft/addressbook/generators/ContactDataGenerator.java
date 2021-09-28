@@ -68,10 +68,10 @@ public class ContactDataGenerator {
 		List<ContactData> contacts = new ArrayList<ContactData>();
 		for (int i = 0; i < count; i++) {
 			contacts.add(new ContactData().withName(String.format("Julia\n%s", i))
-							.withLastname(String.format("Nikon\n%s", i))
+							.withLastname(String.format("Nikonova\n%s", i))
 							.withEmail(String.format("email\n%s", i))
 							.withMobile(String.format("111\n%s", i))
-							.withGroup(String.format("test\n%s", i)));
+							.withGroup(String.format("test")));
 		}
 		return contacts;
 	}

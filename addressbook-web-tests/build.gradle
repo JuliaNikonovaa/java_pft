@@ -1,4 +1,6 @@
 apply plugin: 'java'
+compileJava {options.encoding = "UTF-8"}
+compileTestJava {options.encoding = "UTF-8"}
 
 repositories {
     mavenCentral()
@@ -10,4 +12,16 @@ dependencies {
     implementation 'com.beust:jcommander:1.81'
     implementation 'com.thoughtworks.xstream:xstream:1.4.18'
     implementation 'com.google.code.gson:gson:2.8.8'
+}
+
+task testGroups(type: Test) {
+    useTestNG {
+       suites 'src/test/resources/testng-groups.xml'
+    }
+}
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
 }

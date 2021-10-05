@@ -75,8 +75,36 @@ public class ContactData {
 	@Type(type = "text")
 	private String photo;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ContactData that = (ContactData) o;
+
+		if (id != that.id) return false;
+		if (name != null ? !name.equals(that.name) : that.name != null) return false;
+		if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
+		if (email != null ? !email.equals(that.email) : that.email != null) return false;
+		return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+		result = 31 * result + (email != null ? email.hashCode() : 0);
+		result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+		return result;
+	}
+
 	public File getPhoto() {
-		return new File(photo);
+		if (photo != null) {
+			return new File(photo);
+		} else {
+			return null;
+		}
 	}
 
 	public ContactData withPhoto(File photo) {
@@ -208,26 +236,6 @@ public class ContactData {
 
 	public String getAllEmails() {
 		return allEmails;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		ContactData that = (ContactData) o;
-
-		if (id != that.id) return false;
-		if (name != null ? !name.equals(that.name) : that.name != null) return false;
-		return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id;
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-		return result;
 	}
 
 

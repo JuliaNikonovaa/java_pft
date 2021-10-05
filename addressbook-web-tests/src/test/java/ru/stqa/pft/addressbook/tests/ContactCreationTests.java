@@ -39,13 +39,13 @@ public class ContactCreationTests extends TestBase {
 	@Test(dataProvider = "validContactFromJson")
 	public void testContactCreation(ContactData contact) throws Exception {
 		app.contact().returnToContactPage();
-		Contacts before = app.contact().all();
+		Contacts before = app.db().contacts();
 		app.contact().gotoAddNewContactPage();
 		File photo = new File("src/test/resources/stru.png");
 		// ContactData contact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254").withPhoto(photo).withGroup("test1");
 		app.contact().create(contact, true);
 		assertThat(app.contact().сount(), equalTo(before.size() + 1));
-		Contacts after = app.contact().all();
+		Contacts after = app.db().contacts();
 
 //app.logout();
 

@@ -1,39 +1,90 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.File;
 
+@Entity
+@Table(name ="addressbook")
+
 public class ContactData {
+
+	@Id
+	@Column (name = "id")
 	private int id = Integer.MAX_VALUE;
+
 	@Expose
+	@Column (name = "firstname")
 	private String name;
+
 	@Expose
+	@Column (name = "mobile")
+	@Type(type = "text")
 	private String mobile;
+
 	@Expose
-	private String email;
+	@Column (name = "email")
+	@Type(type = "text")
+  private String email;
+
+	@Column (name = "home")
+	@Type(type = "text")
 	private String homePhone;
+
+	@Column (name = "work")
+	@Type(type = "text")
 	private String workPhone;
+
+	@Column (name = "address")
+	@Type(type = "text")
 	private String address;
+
+	@Column (name = "email2")
+	@Type(type = "text")
 	private String email2;
+
+	@Column (name = "email3")
+	@Type(type = "text")
 	private String email3;
+
 	@Expose
+	@Column (name = "lastname")
 	private String lastname;
+
 	@Expose
-	private String group;
-	private String allPhones;
-	private String allEmails;
+	transient private String group;
+	transient private String allPhones;
+	transient private String allEmails;
+
+	@Override
+	public String toString() {
+		return "ContactData{" +
+						"id=" + id +
+						", name='" + name + '\'' +
+						", lastname='" + lastname + '\'' +
+						'}';
+	}
+
+	@Column (name = "photo")
+	@Type(type = "text")
+	private String photo;
 
 	public File getPhoto() {
-		return photo;
+		return new File(photo);
 	}
 
 	public ContactData withPhoto(File photo) {
-		this.photo = photo;
+		this.photo = photo.getPath();
 		return this;
 	}
 
-	private File photo;
+
 
 	public ContactData withAddress(String address) {
 		this.address = address;
@@ -179,15 +230,5 @@ public class ContactData {
 		return result;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "ContactData{" +
-						"id='" + id + '\'' +
-						", name='" + name + '\'' +
-						", lastname='" + lastname + '\'' +
-						'}';
-	}
 
 }

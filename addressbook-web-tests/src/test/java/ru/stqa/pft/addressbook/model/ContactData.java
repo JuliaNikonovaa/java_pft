@@ -71,10 +71,6 @@ public class ContactData {
 						'}';
 	}
 
-	@Column (name = "photo")
-	@Type(type = "text")
-	private String photo;
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -98,6 +94,10 @@ public class ContactData {
 		result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
 		return result;
 	}
+
+
+	@Type(type = "text")
+	transient private String photo;
 
 	public File getPhoto() {
 		if (photo != null) {

@@ -4,11 +4,10 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name ="addressbook")
@@ -57,8 +56,15 @@ public class ContactData {
 	@Column (name = "lastname")
 	private String lastname;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "address_in_groups",
+					joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+
+	private Set<GroupData> groups = new HashSet<GroupData>();
+
+
+
 	@Expose
-	transient private String group;
 	transient private String allPhones;
 	transient private String allEmails;
 
@@ -179,12 +185,6 @@ public class ContactData {
 		return this;
 	}
 
-	public ContactData withGroup(String group) {
-		this.group = group;
-		return this;
-	}
-
-
 
 	public int getId() {
 		return id;
@@ -214,8 +214,8 @@ public class ContactData {
 		return workPhone;
 	}
 
-	public String getGroup() {
-		return group;
+	public Groups getGroups() {
+		return new Groups(groups);
 	}
 
 	public String getAddress() {

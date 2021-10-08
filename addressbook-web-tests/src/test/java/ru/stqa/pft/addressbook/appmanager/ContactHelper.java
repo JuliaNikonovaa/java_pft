@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -33,11 +34,11 @@ public class ContactHelper extends HelperBase {
 
 
 		if (creation) {
-			if (contactData.getGroups().size() >0) {
+			if (contactData.getGroups().size() > 0) {
 				Assert.assertTrue(contactData.getGroups().size() == 1);
 				new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
 			}
-		}else {
+		} else {
 			Assert.assertFalse(isElementPresent(By.name("new_group")));
 		}
 	}
@@ -59,7 +60,7 @@ public class ContactHelper extends HelperBase {
 	}
 
 	//public void editSelectedContact(int id) {
-		//wd.findElement(By.xpath("//img[@alt='Edit']")).click();
+	//wd.findElement(By.xpath("//img[@alt='Edit']")).click();
 	//}
 
 	public void updateContact() {
@@ -72,6 +73,7 @@ public class ContactHelper extends HelperBase {
 		contactCache = null;
 		returnToContactPage();
 	}
+
 	public void modify(ContactData contact) {
 		selectContactById(contact.getId());
 		initContactModificationById(contact.getId());
@@ -97,6 +99,7 @@ public class ContactHelper extends HelperBase {
 	public int сount() {
 		return wd.findElements(By.name("selected[]")).size();
 	}
+
 	private Contacts contactCache = null;
 
 	public Contacts all() {
@@ -125,8 +128,8 @@ public class ContactHelper extends HelperBase {
 
 
 	public ContactData infoFromEditForm(ContactData contact) {
-	initContactModificationById(contact.getId());
-	  String name = wd.findElement(By.name("firstname")).getAttribute("value");
+		initContactModificationById(contact.getId());
+		String name = wd.findElement(By.name("firstname")).getAttribute("value");
 		String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
 		String home = wd.findElement(By.name("home")).getAttribute("value");
 		String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
@@ -146,5 +149,18 @@ public class ContactHelper extends HelperBase {
 		WebElement row = checkbox.findElement(By.xpath("./../.."));
 		List<WebElement> cells = row.findElements(By.tagName("td"));
 		cells.get(7).findElement(By.tagName("a")).click();
+	}
+
+	public void addToGroup(ContactData contact, GroupData group) {
+		returnToContactPage();
+		selectContactById(contact.getId());
+		selectGroupByName(group.getName());
+		click(By.name("add"));
+	}
+
+
+	public void selectGroupByName(String name) {
+		new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name);
+
 	}
 }

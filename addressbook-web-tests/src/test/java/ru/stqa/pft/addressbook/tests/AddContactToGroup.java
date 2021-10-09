@@ -25,25 +25,48 @@ public class AddContactToGroup extends TestBase {
 							.inGroup(groups.iterator().next());
 			app.contact().returnToContactPage();
 			app.contact().gotoAddNewContactPage();
-			app.contact().create( newContact,true);
+			app.contact().create(newContact, true);
 		}
 	}
 
 	@Test
 	public void AddContactToGroup() {
 		ContactData contact = app.db().contacts().iterator().next();
-		GroupData groupsBeforeTest = addedGroupsBeforeTest(contact);
-		app.contact().addToGroup(contact, groupsBeforeTest);
+		GroupData groupsForAdd = addedGroupsBeforeTest(contact);
+		app.contact().addToGroup(contact, groupsForAdd);
 		app.contact().returnToContactPage();
 		Groups groupsAfterTest = listGroupsBeforeTest(contact);
-assertThat(groupsAfterTest.size(), equalTo(contact.getGroups().size() +1);
-
-		assertThat(groupsAfterTest, equalTo(contact.getGroups().withAdded(groupsBeforeTest
-										.withId(maxIdFromGroupsAfterOperation))));
+	//	assertThat(groupsAfterTest.size(), equalTo(contact.getGroups().size() + 1));
+int maxGroupIdafterTest = groupsAfterTest.stream().mapToInt((g) -> g.getId()).max().getAsInt();
+		assertThat(groupsAfterTest, equalTo(contact.getGroups().withAdded(groupsForAdd
+						.withId(maxGroupIdafterTest))));
 	}
 
-	private GroupData addedGroupsBeforeTest(ContactData contactBeforeTest) {
-		ContactData contactBeforeTest
+	private Groups listGroupsBeforeTest(ContactData contactBeforeTest) {
+		ContactData contactAfterTest = app.db().contacts().getUser(contactBeforeTest);
+		return contactAfterTest.getGroups();
+	}
 
+	private GroupData addedGroupsBeforeTest(ContactData contact) {
+		Groups contactGroups = contact.getGroups();
+		Groups allGroups = app.db().groups();
+		return getGroupsToAdd(allGroups, contactGroups);
+	}
+
+	private GroupData getGroupsToAdd(Groups allGroups, Groups contactGroups) {
+		GroupData groupsToAdd;
+		for (GroupData groupsContact : contactGroups) {
+			if (allGroups.contains(groupsContact)) {
+				allGroups.remove(groupsContact);
+			}
+		}
+		if (allGroups.isEmpty()) {
+			app.group().groupPage();
+			groupsToAdd = new GroupData().withName("test1").withHeader("test2").withFooter("test3");
+			app.group().create(groupsToAdd);
+		} else {
+			groupsToAdd = allGroups.iterator().next();
+		}
+		return groupsToAdd;
 	}
 }

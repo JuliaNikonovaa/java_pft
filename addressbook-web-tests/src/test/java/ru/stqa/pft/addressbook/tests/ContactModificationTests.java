@@ -35,7 +35,9 @@ public class ContactModificationTests extends TestBase {
         ContactData modifiedContact = before.iterator().next();
         Groups groups = app.db().groups();
         ContactData contact = new ContactData()
-                .withId(modifiedContact.getId()).withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254").inGroup(groups.iterator().next());
+                .withId(modifiedContact.getId()).withLastname("Nikonova").withName("Julia")
+                .withEmail("j.n@kx.com").withMobile("89119158254")
+                .inGroup(groups.iterator().next());
         app.contact().returnToContactPage();
         app.contact().modify(contact);
         assertThat(app.contact().сount(), equalTo(before.size()));

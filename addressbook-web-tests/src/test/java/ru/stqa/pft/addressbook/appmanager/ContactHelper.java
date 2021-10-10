@@ -153,9 +153,14 @@ public class ContactHelper extends HelperBase {
 
 	public void addToGroup(ContactData contact, GroupData group) {
 		returnToContactPage();
+		ClearGroupFilter();
 		selectContactById(contact.getId());
 		selectGroupByName(group.getName());
 		addContact();
+	}
+
+	private void ClearGroupFilter() {
+		new Select(wd.findElement(By.name("group"))).selectByVisibleText("[all]");
 	}
 
 	public void selectGroupByName(String name) {
@@ -163,21 +168,21 @@ public class ContactHelper extends HelperBase {
 	}
 
 	private void addContact() {
-		clickcontact(By.name("add"));
+		wd.findElement(By.name("add")).click();
 	}
 
 	public void deleteContactFromGroup(ContactData contact, GroupData group) {
 		returnToContactPage();
-		selectGroupFromAll(group.getName());
+		SetGroupFilter(group.getName());
 		selectContactById(contact.getId());
 		deleteGroup();
 	}
 
-	private void selectGroupFromAll(String name) {
+	private void SetGroupFilter(String name) {
 		new Select(wd.findElement(By.name("group"))).selectByVisibleText(name);
 		}
 
 	private void deleteGroup() {
-		click(By.name("remove"));
+		wd.findElement(By.name("remove")).click();
 	}
 }

@@ -12,10 +12,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DeleteGroupFromContact extends TestBase {
 
-//	@BeforeMethod
-//	public void ensurePreconditions() {
-
-//}
+	@BeforeMethod
+	public void ensurePreconditions() {
+		AddContactToGroup contactGroup = new AddContactToGroup();
+		contactGroup.ensurePreconditions();
+		Contacts beforeContacts = app.db().contacts();
+		for (ContactData user : beforeContacts) {
+			if (user.getGroups().size() > 0) {
+				return;
+			}
+		}
+		contactGroup.AddContactToGroup();
+	}
 
 	@Test
 	public void DeleteGroupFromContact() {

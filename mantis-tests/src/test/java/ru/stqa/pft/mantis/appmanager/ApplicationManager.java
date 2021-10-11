@@ -40,12 +40,15 @@ public class ApplicationManager {
 		wd.get(properties.getProperty("web.baseUrl"));
 	}
 
-	public void logout() {
-		wd.findElement(By.linkText("Logout")).click();
-	}
-
 	public void stop() {
 		wd.quit();
+	}
+
+	public HttpSession newSession() {
+		return new HttpSession(this);
+	}
+	public String getProperty(String key) {
+		return properties.getProperty(key);
 	}
 }
 

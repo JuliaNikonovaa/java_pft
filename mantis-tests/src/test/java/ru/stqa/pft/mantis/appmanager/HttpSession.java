@@ -28,13 +28,14 @@ public class HttpSession {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("username", username));
+	//	params.add(new BasicNameValuePair("return", "index.php"));
 		params.add(new BasicNameValuePair("password", password));
 		params.add(new BasicNameValuePair("secure_session", "on"));
 		params.add(new BasicNameValuePair("return", "index.php"));
 		post.setEntity(new UrlEncodedFormEntity(params));
 		CloseableHttpResponse response = httpclient.execute(post);
 		String body = geTextFrom(response);
-		return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+		return body.contains(String.format("<a href=\"/mantisbt-2.25.2/account_page.php\">%s</a>", username));
 	}
 
 
@@ -50,7 +51,7 @@ public class HttpSession {
 		HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
 		CloseableHttpResponse response = httpclient.execute(get);
 		String body = geTextFrom(response);
-		return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+		return body.contains(String.format("<a href=\"/mantisbt-2.25.2/account_page.php\">%s</a>", username));
 	}
 }
 

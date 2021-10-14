@@ -1,7 +1,5 @@
 package ru.stqa.pft.mantis.appmanager;
 
-import javafx.animation.AnimationTimer;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;

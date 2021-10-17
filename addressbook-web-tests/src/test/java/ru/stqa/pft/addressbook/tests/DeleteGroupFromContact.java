@@ -14,15 +14,22 @@ public class DeleteGroupFromContact extends TestBase {
 
 	@BeforeMethod
 	public void ensurePreconditions() {
-		AddContactToGroup contactGroup = new AddContactToGroup();
-		contactGroup.ensurePreconditions();
-		Contacts beforeContacts = app.db().contacts();
-		for (ContactData user : beforeContacts) {
-			if (user.getGroups().size() > 0) {
-				return;
+		if (app.db().contacts().size() == 0) {
+			if (app.db().groups().size() == 0) {
+				app.goTo().groupPage();
+				app.group().create(new GroupData().withName("test1"));
 			}
+			Groups groups = app.db().groups();
+			ContactData newContact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254")
+							.inGroup(groups.iterator().next());
+			app.contact().returnToContactPage();
+			app.contact().gotoAddNewContactPage();
+			app.contact().create(newContact, true);
+			app.contact().returnToContactPage();
+			ContactData contact = app.db().contacts().iterator().next();
+			app.contact().addToGroup(contact, groups.iterator().next());
+			app.contact().returnToContactPage();
 		}
-		contactGroup.AddContactToGroup();
 	}
 
 	@Test

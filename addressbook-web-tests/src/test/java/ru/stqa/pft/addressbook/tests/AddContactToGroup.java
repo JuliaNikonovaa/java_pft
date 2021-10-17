@@ -9,6 +9,7 @@ import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertTrue;
 
 
 public class AddContactToGroup extends TestBase {
@@ -36,10 +37,10 @@ public class AddContactToGroup extends TestBase {
 		app.contact().addToGroup(contact, groupsForAdd);
 		app.contact().returnToContactPage();
 		Groups groupsAfterTest = listGroupsBeforeTest(contact);
-	//	assertThat(groupsAfterTest.size(), equalTo(contact.getGroups().size() + 1));
-int maxGroupIdafterTest = groupsAfterTest.stream().mapToInt((g) -> g.getId()).max().getAsInt();
+		assertTrue(app.db().groups().contains(groupsForAdd));
+		int maxGroupIdAfterTest = groupsAfterTest.stream().mapToInt((g) -> g.getId()).max().getAsInt();
 		assertThat(groupsAfterTest, equalTo(contact.getGroups().withAdded(groupsForAdd
-						.withId(maxGroupIdafterTest))));
+						.withId(maxGroupIdAfterTest))));
 	}
 
 	private Groups listGroupsBeforeTest(ContactData contactBeforeTest) {
@@ -55,18 +56,17 @@ int maxGroupIdafterTest = groupsAfterTest.stream().mapToInt((g) -> g.getId()).ma
 
 	private GroupData getGroupsToAdd(Groups allGroups, Groups contactGroups) {
 		GroupData groupsToAdd;
-		for (GroupData groupsContact : contactGroups) {
-			if (allGroups.contains(groupsContact)) {
-				allGroups.remove(groupsContact);
+		for (GroupData groups : contactGroups) {
+			if (allGroups.contains(groups)) {
+				allGroups.remove(groups);
 			}
+			} if (allGroups.isEmpty()) {
+				app.goTo().groupPage();
+				groupsToAdd = new GroupData().withName("test2");
+				app.group().create(groupsToAdd);
+			} else {
+				groupsToAdd = allGroups.iterator().next();
+			}
+			return groupsToAdd;
 		}
-		if (allGroups.isEmpty()) {
-			app.group().groupPage();
-			groupsToAdd = new GroupData().withName("test1").withHeader("test2").withFooter("test3");
-			app.group().create(groupsToAdd);
-		} else {
-			groupsToAdd = allGroups.iterator().next();
-		}
-		return groupsToAdd;
 	}
-}

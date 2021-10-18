@@ -9,19 +9,24 @@ dependencies {
     implementation 'org.testng:testng:7.4.0'
 }
 
-task testGroups(type: Test) {
-    useTestNG {
-       suites 'src/test/resources/testng-groups.xml'
+buildscript{
+    repositories{
+        jcenter()
+        mavenCentral()
     }
-    if (project.hasProperty('browser')) {
-        systemProperty 'browser', "${browser}"
+    dependencies {
+        classpath 'no.nils:wsdl2java:0.12'
     }
+}
 
-    if (project.hasProperty('target')) {
-        systemProperty 'target', "${target}"
-    }
+apply plugin: 'no.nils.wsdl2java'
 
-    if (project.hasProperty('verifyUI')) {
-        systemProperty 'verifyUI', "${verifyUI}"
-    }
+wsdl2java {
+    wsdlDir = file("src/main/resources") // define to support incremental build
+    wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
+                          ['src/main/resources/geoipservice.wsdl'],
+
+    ]
+  //  cxfVersion = "2.5.1"
+    //cxfPluginVersion = "2.4.0"
 }

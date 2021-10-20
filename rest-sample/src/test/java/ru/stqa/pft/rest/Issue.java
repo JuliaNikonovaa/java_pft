@@ -5,6 +5,17 @@ public class Issue {
 	private int id;
 	private String subject;
 	private String description;
+	private String status;
+
+	@Override
+	public String toString() {
+		return "Issue{" +
+						"id=" + id +
+						", subject='" + subject + '\'' +
+						", description='" + description + '\'' +
+						", status='" + status + '\'' +
+						'}';
+	}
 
 	public int getId() {
 		return id;
@@ -51,6 +62,10 @@ public class Issue {
 	public Issue withDescription(String description) {
 		this.description = description;
 		return this;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 }
 

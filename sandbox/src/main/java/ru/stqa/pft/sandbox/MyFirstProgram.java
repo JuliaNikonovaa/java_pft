@@ -1,6 +1,4 @@
-package ru.stqa.ptf.sandbox;
-
-import java.sql.SQLOutput;
+package ru.stqa.pft.ptf.sandbox;
 
 public class MyFirstProgram {
 

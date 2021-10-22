@@ -1,4 +1,4 @@
-package ru.stqa.ptf.sandbox2;
+package ru.stqa.pft.ptf.sandbox2;
 
 public class Start {
 

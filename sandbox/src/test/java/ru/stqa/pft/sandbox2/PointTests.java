@@ -1,4 +1,4 @@
-package ru.stqa.ptf.sandbox2;
+package ru.stqa.pft.ptf.sandbox2;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

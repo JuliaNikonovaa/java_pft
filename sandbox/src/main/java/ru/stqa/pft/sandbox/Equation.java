@@ -1,4 +1,4 @@
-package ru.stqa.pft.ptf.sandbox;
+package ru.stqa.pft.sandbox;
 
 public class Equation {
 

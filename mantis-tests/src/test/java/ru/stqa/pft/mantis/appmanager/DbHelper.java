@@ -1,11 +1,12 @@
 package ru.stqa.pft.mantis.appmanager;
 
-import biz.futureware.mantis.rpc.soap.client.UserData;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.stqa.pft.mantis.model.UserData;
 
 import java.util.List;
 

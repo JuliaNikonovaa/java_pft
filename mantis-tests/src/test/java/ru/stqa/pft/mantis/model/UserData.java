@@ -1,5 +1,7 @@
 package ru.stqa.pft.mantis.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,18 +10,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mantis_user_table")
+
 public class UserData {
+
 	@Id
 	int id ;
 
 	@Column(name = "username")
-	String username;
+	@Type(type = "text")
+	private String username;
 
 	@Column(name = "email")
-	String email;
+	@Type(type = "text")
+	private String email;
 
 	@Column(name = "password")
-	String password;
+	@Type(type = "text")
+	private String password;
 
 	public int getId() {
 		return id;
@@ -28,6 +35,16 @@ public class UserData {
 	public UserData withId(int id) {
 		this.id = id;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "UserData{" +
+						"id=" + id +
+						", username='" + username + '\'' +
+						", email='" + email + '\'' +
+						", password='" + password + '\'' +
+						'}';
 	}
 
 	@Override
@@ -73,16 +90,6 @@ public class UserData {
 	public UserData withPassword(String password) {
 		this.password = password;
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "UserData{" +
-						"id=" + id +
-						", username='" + username + '\'' +
-						", email='" + email + '\'' +
-						", password='" + password + '\'' +
-						'}';
 	}
 
 

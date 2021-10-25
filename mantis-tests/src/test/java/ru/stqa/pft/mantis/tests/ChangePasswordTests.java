@@ -1,10 +1,10 @@
 package ru.stqa.pft.mantis.tests;
 
-import biz.futureware.mantis.rpc.soap.client.UserData;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.MailMessage;
+import ru.stqa.pft.mantis.model.UserData;
 
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class ChangePasswordTests extends TestBase {
 	}
 
 	@Test
-	public void changePasswordTest()  {
+	public void changePasswordTest() throws IOException {
 		app.registration().userLogin(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));
 		UserData user = selectedUser(app.db().allUsers());
 		String newPassword = "newPassword";

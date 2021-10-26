@@ -25,10 +25,6 @@ task testGroups(type: Test) {
         systemProperty 'browser', "${browser}"
     }
 
-    if (project.hasProperty('platform')) {
-        systemProperty 'platform', "${browser}"
-    }
-
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }

@@ -3,11 +3,10 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertTrue;
 
 
@@ -31,41 +30,34 @@ public class AddContactToGroup extends TestBase {
 
 	@Test
 	public void AddContactToGroup() {
-		ContactData contact = app.db().contacts().iterator().next();
-		GroupData groupsForAdd = addedGroupsBeforeTest(contact);
-		app.contact().addToGroup(contact, groupsForAdd);
-		app.contact().returnToContactPage();
-		Groups groupsAfterTest = listGroupsBeforeTest(contact);
-		assertTrue(app.db().groups().contains(groupsForAdd));
-		int maxGroupIdAfterTest = groupsAfterTest.stream().mapToInt((g) -> g.getId()).max().getAsInt();
-		assertThat(groupsAfterTest, equalTo(contact.getGroups().withAdded(groupsForAdd
-						.withId(maxGroupIdAfterTest))));
-	}
-
-	private Groups listGroupsBeforeTest(ContactData contactBeforeTest) {
-		ContactData contactAfterTest = app.db().contacts().getUser(contactBeforeTest);
-		return contactAfterTest.getGroups();
-	}
-
-	private GroupData addedGroupsBeforeTest(ContactData contact) {
-		Groups contactGroups = contact.getGroups();
 		Groups allGroups = app.db().groups();
-		return getGroupsToAdd(allGroups, contactGroups);
-	}
+		boolean unsetContactExists = false;
+		Contacts contacts = app.db().contacts();
+		for (ContactData contactData : contacts) {
+			Groups contactGroups = contactData.getGroups();
+			for (GroupData oneFromAllGroups : allGroups) {
+				if (!contactGroups.contains(oneFromAllGroups)) {
+					contactGroups.add(oneFromAllGroups);
+					app.contact().addToGroup(contactData, oneFromAllGroups );
+					unsetContactExists = true;
+				assertTrue(contactGroups.contains(oneFromAllGroups));
+					break;
+				}
+			}
+			if (unsetContactExists) {
+				break;
+			}
+		}
 
-	private GroupData getGroupsToAdd(Groups allGroups, Groups contactGroups) {
-		GroupData groupsToAdd;
-		for (GroupData groups : contactGroups) {
-			if (allGroups.contains(groups)) {
-				allGroups.remove(groups);
-			}
-			} if (allGroups.isEmpty()) {
-				app.goTo().groupPage();
-				groupsToAdd = new GroupData().withName("test2");
-				app.group().create(groupsToAdd);
-			} else {
-				groupsToAdd = allGroups.iterator().next();
-			}
-			return groupsToAdd;
+		if (!unsetContactExists) {
+			app.goTo().groupPage();
+			GroupData newGroup = new GroupData().withName("test group");
+			app.group().create(newGroup);
+			ContactData contactData = contacts.iterator().next();
+			contactData.getGroups().add(newGroup);
+			app.contact().addToGroup(contactData, newGroup);
+//			assertTrue(app.db().groups().contains(newGroup));
+			assertTrue(contactData.getGroups().contains(newGroup));
 		}
 	}
+}

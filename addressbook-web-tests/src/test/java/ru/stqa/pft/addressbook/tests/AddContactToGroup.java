@@ -34,13 +34,12 @@ public class AddContactToGroup extends TestBase {
 		boolean unsetContactExists = false;
 		Contacts contacts = app.db().contacts();
 		for (ContactData contactData : contacts) {
-			Groups contactGroups = contactData.getGroups();
 			for (GroupData oneFromAllGroups : allGroups) {
-				if (!contactGroups.contains(oneFromAllGroups)) {
-					contactGroups.add(oneFromAllGroups);
+				if (!contactData.getGroups().contains(oneFromAllGroups)) {
+					int groupCountBefore = contactData.getGroups().size();
 					app.contact().addToGroup(contactData, oneFromAllGroups );
 					unsetContactExists = true;
-				assertTrue(contactGroups.contains(oneFromAllGroups));
+					assertTrue((groupCountBefore + 1) == app.db().contacts().getUser(contactData).getGroups().size());
 					break;
 				}
 			}
@@ -54,10 +53,9 @@ public class AddContactToGroup extends TestBase {
 			GroupData newGroup = new GroupData().withName("test group");
 			app.group().create(newGroup);
 			ContactData contactData = contacts.iterator().next();
-			contactData.getGroups().add(newGroup);
+			int groupCountBefore = contactData.getGroups().size();
 			app.contact().addToGroup(contactData, newGroup);
-//			assertTrue(app.db().groups().contains(newGroup));
-			assertTrue(contactData.getGroups().contains(newGroup));
+			assertTrue((groupCountBefore + 1) == app.db().contacts().getUser(contactData).getGroups().size());
 		}
 	}
 }

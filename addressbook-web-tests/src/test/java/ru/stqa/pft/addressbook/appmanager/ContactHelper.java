@@ -96,9 +96,7 @@ public class ContactHelper extends HelperBase {
 		returnToContactPage();
 	}
 
-	public int сount() {
-		return wd.findElements(By.name("selected[]")).size();
-	}
+
 
 	private Contacts contactCache = null;
 
@@ -171,11 +169,12 @@ public class ContactHelper extends HelperBase {
 		wd.findElement(By.name("add")).click();
 	}
 
-	public void deleteContactFromGroup(ContactData contact, GroupData group) {
+	public void deleteContactFromGroup(ContactData contact) {
 		returnToContactPage();
-		SetGroupFilter(group.getName());
 		selectContactById(contact.getId());
 		deleteGroup();
+		returnToContactPage();
+		ClearGroupFilter();
 	}
 
 	private void SetGroupFilter(String name) {
@@ -184,5 +183,13 @@ public class ContactHelper extends HelperBase {
 
 	private void deleteGroup() {
 		wd.findElement(By.name("remove")).click();
+	}
+
+	public void selectedContactInGroups(GroupData group) {
+		new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(group.getId()));
+	}
+
+	public int сount() {
+		return wd.findElements(By.name("selected[]")).size();
 	}
 }

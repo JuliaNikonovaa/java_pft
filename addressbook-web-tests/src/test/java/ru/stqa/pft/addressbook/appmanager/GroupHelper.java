@@ -76,10 +76,6 @@ public class GroupHelper extends HelperBase {
 		return isElementPresent(By.name("selected[]"));
 	}
 
-	public int сount() {
-		return wd.findElements(By.name("selected[]")).size();
-	}
-
 	private Groups groupCache = null;
 
 	public Groups all() {
@@ -105,4 +101,9 @@ public class GroupHelper extends HelperBase {
 		}
 		click(By.linkText("groups"));
 	}
-}
+
+	public int count() {
+		return wd.findElements(By.name("selected[]")).size();
+	}
+	}
+

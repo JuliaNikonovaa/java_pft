@@ -23,7 +23,7 @@ public class ContactModificationTests extends TestBase {
             ContactData newContact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254")
                     .inGroup(groups.iterator().next());
             app.contact().returnToContactPage();
-                        app.contact().gotoAddNewContactPage();
+            app.contact().gotoAddNewContactPage();
             app.contact().create( newContact,true);
         }
     }

@@ -7,42 +7,55 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.Set;
+
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class DeleteGroupFromContact extends TestBase {
 
 	@BeforeMethod
 	public void ensurePreconditions() {
+
+		GroupData newGroup = new GroupData();
+		ContactData newContact = new ContactData();
+
+		if (app.db().groups().size() == 0) {
+			newGroup = new GroupData().withName("test1");
+			app.goTo().groupPage();
+			Groups groupsBefore = app.db().groups();
+			app.group().create(newGroup);
+			assertThat(app.group().count(), equalTo(groupsBefore.size() + 1));
+		}
+
 		if (app.db().contacts().size() == 0) {
-			if (app.db().groups().size() == 0) {
-				app.goTo().groupPage();
-				app.group().create(new GroupData().withName("test1"));
-			}
-			Groups groups = app.db().groups();
-			ContactData newContact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254")
-							.inGroup(groups.iterator().next());
+			newContact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254");
 			app.contact().returnToContactPage();
-			app.contact().gotoAddNewContactPage();
+			Contacts contactBefore = app.db().contacts();
 			app.contact().create(newContact, true);
-			app.contact().returnToContactPage();
-			ContactData contact = app.db().contacts().iterator().next();
-			app.contact().addToGroup(contact, groups.iterator().next());
-			app.contact().returnToContactPage();
+			assertThat(app.contact().count(), equalTo(contactBefore.size() + 1));
 		}
 	}
 
 	@Test
 	public void DeleteGroupFromContact() {
-		app.contact().returnToContactPage();
-		ContactData contactBeforeTest = Contacts.getContactsWithGroups(app.db().contacts());
-		Groups groupsBefore = contactBeforeTest.getGroups();
-		GroupData deleteGroup = contactBeforeTest.getGroups().iterator().next();
-		app.contact().deleteContactFromGroup(contactBeforeTest, deleteGroup);
-		ContactData contactAfterTest = app.db().contacts().getUser(contactBeforeTest);
-		Groups groupsAfter = contactAfterTest.getGroups();
-		assertThat(groupsAfter.size(), equalTo(groupsBefore.size() - 1));
-		assertThat(groupsAfter, equalTo(groupsBefore.without(deleteGroup)));
-
-	}
+			ContactData deletedContact = app.db().contacts().iterator().next();
+			Groups groups = app.db().groups();
+			GroupData deletedGroup = new GroupData();
+			app.contact().returnToContactPage();
+			if (deletedContact.getGroups().size() == 0) {
+				deletedGroup = groups.iterator().next();
+				app.contact().addToGroup(deletedContact, deletedGroup);
+				Set<GroupData> contactAfter = app.db().userById(deletedContact.getId()).getGroups();
+				assertTrue(contactAfter.contains(deletedGroup));
+			} else {
+				deletedGroup = deletedContact.getGroups().iterator().next();
+			}
+			app.contact().selectedContactInGroups(deletedGroup);
+			app.contact().deleteContactFromGroup(deletedContact);
+			Set<GroupData> contactGroupsAfter = app.db().userById(deletedContact.getId()).getGroups();
+			assertFalse(contactGroupsAfter.contains(deletedGroup));
+		}
 }

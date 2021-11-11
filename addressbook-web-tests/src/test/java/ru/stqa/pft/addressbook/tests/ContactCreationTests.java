@@ -46,7 +46,7 @@ public class ContactCreationTests extends TestBase {
 		File photo = new File("src/test/resources/stru.png");
 		// ContactData contact = new ContactData().withLastname("Nikonova").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254").withPhoto(photo).withGroup("test1");
 		app.contact().create(contact, true);
-		assertThat(app.contact().сount(), equalTo(before.size() + 1));
+		assertThat(app.contact().count(), equalTo(before.size() + 1));
 		Contacts after = app.db().contacts();
 
 //app.logout();
@@ -63,7 +63,7 @@ public class ContactCreationTests extends TestBase {
 		app.contact().gotoAddNewContactPage();
 		ContactData contact = new ContactData().withLastname("Nikonova'").withName("Julia").withEmail("j.n@kx.com").withMobile("89119158254");
 		app.contact().create(contact, true);
-		assertThat(app.contact().сount(), equalTo(before.size()));
+		assertThat(app.contact().count(), equalTo(before.size()));
 		Contacts after = app.contact().all();
 
 //app.logout();

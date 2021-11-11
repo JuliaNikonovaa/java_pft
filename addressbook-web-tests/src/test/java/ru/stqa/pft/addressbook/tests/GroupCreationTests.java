@@ -61,7 +61,7 @@ public class GroupCreationTests extends TestBase {
 		app.goTo().groupPage();
 		Groups before = app.db().groups();
 		app.group().create(group);
-		assertThat(app.group().сount(), equalTo(before.size() + 1));
+		assertThat(app.group().count(), equalTo(before.size() + 1));
 		Groups after = app.db().groups();
 		//app.logout();
 		assertThat(after, equalTo(
@@ -75,7 +75,7 @@ public class GroupCreationTests extends TestBase {
 		Groups before = app.group().all();
 		GroupData group = new GroupData().withName("test'");
 		app.group().create(group);
-		assertThat(app.group().сount(), equalTo(before.size()));
+		assertThat(app.group().count(), equalTo(before.size()));
 		Groups after = app.group().all();
 
 		//app.logout();

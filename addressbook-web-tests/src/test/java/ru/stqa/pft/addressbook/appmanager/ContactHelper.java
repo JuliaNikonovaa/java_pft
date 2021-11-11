@@ -189,7 +189,7 @@ public class ContactHelper extends HelperBase {
 		new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(group.getId()));
 	}
 
-	public int сount() {
+	public int count() {
 		return wd.findElements(By.name("selected[]")).size();
 	}
 }

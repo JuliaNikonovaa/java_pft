@@ -40,7 +40,7 @@ public class ContactModificationTests extends TestBase {
                 .inGroup(groups.iterator().next());
         app.contact().returnToContactPage();
         app.contact().modify(contact);
-        assertThat(app.contact().сount(), equalTo(before.size()));
+        assertThat(app.contact().count(), equalTo(before.size()));
         //app.logout();
         Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
